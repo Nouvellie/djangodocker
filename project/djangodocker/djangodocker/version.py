@@ -10,7 +10,7 @@ __version__     =     "0.0.1"
 __logs__        =  {
     'version':      "0.0.1",
     'date':         "07/21/2021",
-    'info':         ["Project start.", "JWT Token added.", "Django environ used.", "Pip requirements.",],
+    'info':         ["Project start.", "JWT Token added.", "Django environ used.", "Pip requirements.", "StartAPIView added."],
     'problems':     ["",],
     'fixed':        None,
     'commit':       "",
