@@ -1,7 +1,7 @@
 # DJANGO-DOCKER TESTING
 
 ## Requirements
-- [).]()
+- []()
 
 
 <br><br><p align="center">
