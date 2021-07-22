@@ -6,16 +6,36 @@ __email__       =     "roberto.rocuantv@gmail.com"
 __maintainer__  =     "Rocuant Roberto"
 __prod__        =     None
 __structure__   =     "str(version) - str(date) - list(info) - list(problems) - none-bool(fixed) - str(commit) - none-bool(prod)"
-__version__     =     "0.0.1"
+__version__     =     "0.0.3"
 __logs__        =  {
-    'version':      "0.0.1",
-    'date':         "07/21/2021",
-    'info':         ["Project start.", "JWT Token added.", "Django environ used.", "Pip requirements.", "StartAPIView added."],
+    'version':      "0.0.3",
+    'date':         "07/22/2021",
+    'info':         [""],
     'problems':     ["",],
     'fixed':        None,
     'commit':       "",
     "prod":         None,
 }
+
+# __logs__        =  {
+#     'version':      "0.0.2",
+#     'date':         "07/22/2021",
+#     'info':         ["Check Token with credentials or refresh token.", "Custom validations from JWT library adapted.", "Get last token.", "Bool for expire date."],
+#     'problems':     ["",],
+#     'fixed':        None,
+#     'commit':       "",
+#     "prod":         None,
+# }
+
+# __logs__        =  {
+#     'version':      "0.0.1",
+#     'date':         "07/21/2021",
+#     'info':         ["Project start.", "JWT Token added.", "Django environ used.", "Pip requirements.", "StartAPIView added.", "Token adapted to nouvellie headers.",],
+#     'problems':     ["",],
+#     'fixed':        None,
+#     'commit':       "",
+#     "prod":         None,
+# }
 
 full_info = {
 	'__author__': __author__,

@@ -4,6 +4,7 @@ from pathlib import Path
 
 import environ
 import os
+import random
 
 
 URIPATH = Path(os.path.dirname(__file__)).joinpath(".env")
@@ -14,9 +15,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = env('SECRET_KEY')
 
+JWT_KEY = ''.join(random.sample(SECRET_KEY, len(SECRET_KEY)))
+
 DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = ['*']
+
+AUTH_APPS = [
+#     'rest_auth',
+    # 'django.contrib.sites',
+#     'allauth',
+#     'allauth.account',
+#     'rest_auth.registration',
+]
 
 CUSTOM_APPS = [
     'apps.core',
@@ -33,36 +44,48 @@ DJANGO_APPS = [
 
 DJANGOREST_APPS = [
     'rest_framework',
+    'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
     'rest_registration',
 ]
 
-INSTALLED_APPS = DJANGO_APPS + DJANGOREST_APPS + CUSTOM_APPS
+REST_USE_JWT = True
+
+    # 'rest_auth',
+    # 'django.contrib.sites',
+    # 'allauth',
+    # 'allauth.account',
+    # 'rest_auth.registration',
+    # 'corsheaders',
+
+INSTALLED_APPS = DJANGO_APPS + DJANGOREST_APPS + AUTH_APPS + CUSTOM_APPS
+
+# SITE_ID = 1
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTTokenUserAuthentication',
     ),
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated', 
-    ),
+    # 'DEFAULT_PERMISSION_CLASSES': (
+    #     'rest_framework.permissions.IsAuthenticated', 
+    # ),
 }
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=90),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=365),
     'ROTATE_REFRESH_TOKENS': False,
-    'BLACKLIST_AFTER_ROTATION': False,
+    'BLACKLIST_AFTER_ROTATION': True,
     'UPDATE_LAST_LOGIN': True,
 
     'ALGORITHM': 'HS256',
-    'SIGNING_KEY': SECRET_KEY,
+    'SIGNING_KEY': JWT_KEY,
     'VERIFYING_KEY': None,
     'AUDIENCE': None,
     'ISSUER': None,
 
-    'AUTH_HEADER_TYPES': ('Bearer',),
-    'AUTH_HEADER_NAME': 'HTTP_AUTHORIZATION',
+    'AUTH_HEADER_TYPES': ('NOUVE',), # Replace 'Bearer'. (NOUVE)
+    'AUTH_HEADER_NAME': 'HTTP_X_NOUVE_TOKEN', # Replace 'Authorization'. (X-NOUVE-TOKEN)
     'USER_ID_FIELD': 'id',
     'USER_ID_CLAIM': 'user_id',
 
@@ -77,14 +100,20 @@ SIMPLE_JWT = {
 }
 
 REST_REGISTRATION = {
-    'REGISTER_VERIFICATION_ENABLED': True,
-    'RESET_PASSWORD_VERIFICATION_ENABLED': True,
-    # 'REGISTER_EMAIL_VERIFICATION_ENABLED': False,    
-    'REGISTER_VERIFICATION_URL': 'http://127.0.0.1:8000/api/accounts/verify-registration/',
-    'RESET_PASSWORD_VERIFICATION_URL': 'http://127.0.0.1:8000/api/accounts/reset-password/',
-    'REGISTER_EMAIL_VERIFICATION_URL': 'http://127.0.0.1:8000/verify-email/',
-    'VERIFICATION_FROM_EMAIL': 'no-reply@example.com',
+    'REGISTER_VERIFICATION_ENABLED': False,
+    'REGISTER_EMAIL_VERIFICATION_ENABLED': False,
+    'RESET_PASSWORD_VERIFICATION_ENABLED': False,
 }
+
+# REST_REGISTRATION = {
+#     'REGISTER_VERIFICATION_ENABLED': True,
+#     'RESET_PASSWORD_VERIFICATION_ENABLED': True,
+#     # 'REGISTER_EMAIL_VERIFICATION_ENABLED': False,    
+#     'REGISTER_VERIFICATION_URL': 'http://127.0.0.1:8000/api/accounts/verify-registration/',
+#     'RESET_PASSWORD_VERIFICATION_URL': 'http://127.0.0.1:8000/api/accounts/reset-password/',
+#     'REGISTER_EMAIL_VERIFICATION_URL': 'http://127.0.0.1:8000/verify-email/',
+#     'VERIFICATION_FROM_EMAIL': 'no-reply@example.com',
+# }
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
