@@ -10,7 +10,7 @@ __version__     =     "0.0.3"
 __logs__        =  {
     'version':      "0.0.3",
     'date':         "07/22/2021",
-    'info':         [""],
+    'info':         ["Refresh access token with refresh token ready.", "Check refresh token with refresh token ready.", "Check refresh token with credentials ready.",],
     'problems':     ["",],
     'fixed':        None,
     'commit':       "",

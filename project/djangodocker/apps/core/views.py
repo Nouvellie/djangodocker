@@ -3,9 +3,13 @@ from datetime import (
 	timezone,
 )
 from django.contrib.auth import authenticate
+from django.contrib.auth.models import update_last_login
 from django.shortcuts import render
 from django.views.generic import TemplateView
-from djangodocker.settings import DEBUG, info
+from djangodocker.settings import (
+	DEBUG, 
+	info,
+)
 from rest_framework import (
 	generics,
 	status,
@@ -50,6 +54,7 @@ class SignIn(APIView):
 			authenticated_user = authenticate(username=username, password=password)
 			
 			if authenticated_user:
+				OT.objects.filter(user_id=authenticated_user).delete()
 				JWT_TOKEN = RT.for_user(authenticated_user)
 
 				output = {
@@ -57,6 +62,7 @@ class SignIn(APIView):
 					'access': str(JWT_TOKEN.access_token),
 				}
 				
+				update_last_login(None, authenticated_user)
 				return Response(output, status=HTTP_200_OK)
 			else:
 				return Response({"error": "Invalid credentials."}, status=HTTP_401_UNAUTHORIZED)
@@ -65,7 +71,7 @@ class SignIn(APIView):
 			return Response({"error": "An error occurred, please try again."}, status=HTTP_400_BAD_REQUEST)
 
 
-class CheckTokenWC(APIView):
+class CheckRefreshTokenWC(APIView):
 
 	def get(self, request, format=None):
 		try:
@@ -92,7 +98,7 @@ class CheckTokenWC(APIView):
 			return Response({"error": "An error occurred, please try again."}, status=HTTP_400_BAD_REQUEST)
 
 
-class CheckTokenWR(APIView):
+class CheckRefreshTokenWRT(APIView):
 
 	def get(self, request, format=None):
 		try:
@@ -110,8 +116,25 @@ class CheckTokenWR(APIView):
 			return Response(output, status=HTTP_200_OK)
 
 		except:
-			# full_traceback = {'error': re.sub(r"\n\s*", " || ", traceback.format_exc())}
-			# return Response(full_traceback, status=HTTP_400_BAD_REQUEST)
-			return Response({"error": "Check the token please."}, status=HTTP_400_BAD_REQUEST)
+			return Response({"error": "Check the refresh token please."}, status=HTTP_400_BAD_REQUEST)
 
 
+class RefreshAccessTokenWRT(APIView):
+
+	def get(self, request, format=None):
+		try:
+			refresh = request.data.get('refresh')
+			token_user = OT.objects.get(token=refresh)
+			
+			output = {
+				'refresh': str(token_user.token),
+				'access': str(RT(token=token_user.token).access_token),
+				'created': str(token_user.created_at),
+				'expires': str(token_user.expires_at),
+				'expired': True if datetime.now(timezone.utc) >= token_user.expires_at else False,
+			}
+
+			return Response(output, status=HTTP_200_OK)
+
+		except:
+			return Response({"error": "Check the refresh token please."}, status=HTTP_400_BAD_REQUEST)

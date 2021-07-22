@@ -1,6 +1,7 @@
 from .views import (
-	CheckTokenWC,
-	CheckTokenWR,
+	CheckRefreshTokenWC,
+	CheckRefreshTokenWRT,
+	RefreshAccessTokenWRT,
 	StartAPI, 
 	SignIn,
 )
@@ -22,13 +23,19 @@ urlpatterns = [
 
 	path(
 		'api/check-wc',
-		CheckTokenWC.as_view(),
+		CheckRefreshTokenWC.as_view(),
 		name="check_wc",
 	),
 	
 	path(
-		'api/check-wr',
-		CheckTokenWR.as_view(),
-		name="check_wr",
+		'api/check-wrt',
+		CheckRefreshTokenWRT.as_view(),
+		name="check_wrt",
+	),
+
+	path(
+		'api/refresh-wrt',
+		RefreshAccessTokenWRT.as_view(),
+		name="refresh_wrt",
 	),
 ]
