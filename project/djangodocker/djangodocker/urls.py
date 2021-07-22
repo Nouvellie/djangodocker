@@ -7,7 +7,6 @@ from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
 )
-from rest_registration.api.views import register as SignUp
 
 
 django_urls = [
@@ -23,15 +22,11 @@ apps_urls = [
 
 rest_urls = [
 
-    path(
-        'accounts/', 
-        include('rest_registration.api.urls'),
-    ),
-    path(
-        'reg', 
-        SignUp, 
-        name='reg'
-    ),
+    # path(
+    #     'accounts/', 
+    #     include('rest_registration.api.urls'),
+    # ),
+    
 ]
 
-urlpatterns = django_urls + apps_urls + rest_urls
+urlpatterns = django_urls + apps_urls

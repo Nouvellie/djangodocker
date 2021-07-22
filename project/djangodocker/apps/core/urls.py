@@ -5,7 +5,11 @@ from .views import (
 	StartAPI, 
 	SignIn,
 )
-from django.urls import path
+from django.urls import (
+	include,
+	path,
+)
+from rest_registration.api.views import register as SignUp
 
 
 urlpatterns = [
@@ -20,6 +24,17 @@ urlpatterns = [
 		SignIn.as_view(),
 		name="signin",
 	),
+
+	path(
+        'api/signup', 
+        SignUp, 
+        name='signup'
+    ),
+
+    path(
+        'accounts/', 
+        include('rest_registration.api.urls'),
+    ),
 
 	path(
 		'api/check-wc',
