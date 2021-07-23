@@ -17,9 +17,9 @@ SECRET_KEY = env('SECRET_KEY')
 
 JWT_KEY = ''.join(random.sample(SECRET_KEY, len(SECRET_KEY)))
 
-DEBUG = env('DEBUG')
+DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['*', 'localhost']
 
 AUTH_APPS = [
 #     'rest_auth',
@@ -127,7 +127,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'djangodocker.urls'
+ROOT_URLCONF = 'myproject.urls'
 
 TEMPLATES = [
     {
@@ -145,7 +145,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'djangodocker.wsgi.application'
+WSGI_APPLICATION = 'myproject.wsgi.application'
 
 DATABASES = {
     'default': {
@@ -179,7 +179,7 @@ USE_L10N = True
 
 USE_TZ = True
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = '/static/'#os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

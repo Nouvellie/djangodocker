@@ -11,7 +11,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.models import update_last_login
 from django.shortcuts import render
 from django.views.generic import TemplateView
-from djangodocker.settings import (
+from myproject.settings import (
 	DEBUG, 
 	info,
 )

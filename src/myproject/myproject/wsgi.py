@@ -2,6 +2,6 @@ from django.core.wsgi import get_wsgi_application
 
 import os
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'djangodocker.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'myproject.settings')
 
 application = get_wsgi_application()

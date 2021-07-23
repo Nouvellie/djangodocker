@@ -1,0 +1,30 @@
+version: '3.9'
+
+services:
+    nginx:
+        image: nginx:latest        
+        ports:
+            - "8080:80"
+        volumes:
+            - ./config/nginx/conf.d:/etc/nginx/conf.d
+            - static_volume:/home/myproject/static
+            - media_volume:/home/myproject/media
+        depends_on:
+            - gunicorn
+
+    gunicorn:
+        container_name: dockertest
+        build:
+            context: .
+            args:
+                PIP_REQUIREMENTS: "${PIP_REQUIREMENTS}"
+        command: bash -c "/home/myproject/env/bin/gunicorn --workers 4 --bind 0.0.0.0:8000 myproject.wsgi:application"
+        volumes:
+            - static_volume:/home/myproject/static
+            - media_volume:/home/myproject/media
+        expose:
+            - "8000"
+
+volumes:
+    static_volume:
+    media_volume:
