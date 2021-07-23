@@ -1,3 +1,8 @@
+from .models import VerifiedAccount
+from .serializers import (
+	MyTokenObtainPairSerializer, 
+	VerifiedAccountSerializer,
+)
 from datetime import (
 	datetime, 
 	timezone,
@@ -26,6 +31,8 @@ from rest_framework.status import (
 	HTTP_404_NOT_FOUND,
 	HTTP_426_UPGRADE_REQUIRED,
 )
+
+from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken as RT
 from rest_framework_simplejwt.token_blacklist.models import OutstandingToken as OT
@@ -44,6 +51,12 @@ class StartAPI(APIView):
 
 		return Response(testing_data, status=HTTP_200_OK)
 
+
+class SignInView(TokenObtainPairView):
+	"""
+	Login View with jWt token authentication
+	"""
+	serializer_class = MyTokenObtainPairSerializer
 
 class SignIn(APIView):
 
@@ -118,6 +131,29 @@ class CheckRefreshTokenWRT(APIView):
 		except:
 			return Response({"error": "Check the refresh token please."}, status=HTTP_400_BAD_REQUEST)
 
+class SignInView(TokenObtainPairView):
+	"""
+	Login View with jWt token authentication
+	"""
+	serializer_class = MyTokenObtainPairSerializer
+	def get(self, request, format=None):
+		try:
+			refresh = request.data.get('refresh')
+			token_user = OT.objects.get(token=refresh)
+			
+			output = {
+				'refresh': str(token_user.token),
+				'access': str(RT(token=token_user.token).access_token),
+				'created': str(token_user.created_at),
+				'expires': str(token_user.expires_at),
+				'expired': True if datetime.now(timezone.utc) >= token_user.expires_at else False,
+			}
+
+			return Response(output, status=HTTP_200_OK)
+
+		except:
+			return Response({"error": "Check the refresh token please."}, status=HTTP_400_BAD_REQUEST)
+
 
 class RefreshAccessTokenWRT(APIView):
 
@@ -138,3 +174,8 @@ class RefreshAccessTokenWRT(APIView):
 
 		except:
 			return Response({"error": "Check the refresh token please."}, status=HTTP_400_BAD_REQUEST)
+			
+
+class ListVerifyAccountCreated(generics.ListAPIView):
+	queryset = VerifiedAccount.objects.all()
+	serializer_class = VerifiedAccountSerializer

@@ -1,9 +1,11 @@
 from .views import (
 	CheckRefreshTokenWC,
 	CheckRefreshTokenWRT,
+	ListVerifyAccountCreated,
 	RefreshAccessTokenWRT,
 	StartAPI, 
 	SignIn,
+	SignInView,
 )
 from django.urls import (
 	include,
@@ -52,5 +54,17 @@ urlpatterns = [
 		'api/refresh-wrt',
 		RefreshAccessTokenWRT.as_view(),
 		name="refresh_wrt",
+	),
+
+	path(
+		'api/signin-custom',
+		SignInView.as_view(),
+		name="signin_custom",
+	),
+
+	path(
+		'api/list',
+		ListVerifyAccountCreated.as_view(),
+		name="list",
 	),
 ]

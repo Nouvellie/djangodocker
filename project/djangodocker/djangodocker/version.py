@@ -6,16 +6,26 @@ __email__       =     "roberto.rocuantv@gmail.com"
 __maintainer__  =     "Rocuant Roberto"
 __prod__        =     None
 __structure__   =     "str(version) - str(date) - list(info) - list(problems) - none-bool(fixed) - str(commit) - none-bool(prod)"
-__version__     =     "0.0.3"
+__version__     =     "0.0.4"
 __logs__        =  {
-    'version':      "0.0.3",
+    'version':      "0.0.4",
     'date':         "07/22/2021",
-    'info':         ["Refresh access token with refresh token ready.", "Check refresh token with refresh token ready.", "Check refresh token with credentials ready.",],
+    'info':         ["SignInView custom.", "Fix Tokens views.", "Adapted Verified token models.", "Serializers VerifiedAccount models."],
     'problems':     ["",],
     'fixed':        None,
     'commit':       "",
     "prod":         None,
 }
+
+# __logs__        =  {
+#     'version':      "0.0.3",
+#     'date':         "07/22/2021",
+#     'info':         ["Refresh access token with refresh token ready.", "Check refresh token with refresh token ready.", "Check refresh token with credentials ready.",],
+#     'problems':     ["",],
+#     'fixed':        None,
+#     'commit':       "",
+#     "prod":         None,
+# }
 
 # __logs__        =  {
 #     'version':      "0.0.2",
